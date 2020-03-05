@@ -108,7 +108,7 @@
                     response(data.result);
                 },
                 error: function(data){
-                    alert("fail");
+                    // alert("fail");
                 }
             })
         },
