@@ -9,22 +9,28 @@
         print_r($keywords);
     @endphp
     <br> --}}
-    <p>@foreach ($result->Isi_Indonesia as $item)
-        @php
-            $isContains = false;
-            foreach ($keywords as $keyword) {
-                $a = strtolower($keyword);
-                $b = strtolower($item);
-                if(strpos($a, $b) !== false || strpos($b, $a) !== false){
-                    $isContains = true;
-                    break;
+    @if ($keywords != '')
+        <p>@foreach ($result->Isi_Indonesia as $item)
+            @php
+                $isContains = false;
+                foreach ($keywords as $keyword) {
+                    $a = strtolower($keyword);
+                    $b = strtolower($item);
+                    if(strpos($a, $b) !== false || strpos($b, $a) !== false){
+                        $isContains = true;
+                        break;
+                    }
                 }
-            }
-            if($isContains == true) {
-                echo '<span class="text-danger"><strong> '.$item.' </strong></span>';  
-            } else {
-                echo '<span>'.$item.'</span>';
-            }
-        @endphp
-    @endforeach</p>
+                if($isContains == true) {
+                    echo '<span class="text-danger"><strong> '.$item.' </strong></span>';  
+                } else {
+                    echo '<span>'.$item.'</span>';
+                }
+            @endphp
+        @endforeach</p>
+    @else
+        <p>@foreach ($result->Isi_Indonesia as $item)
+            <span> {{ $item }} </span>
+        @endforeach</p>
+    @endif
 @endsection

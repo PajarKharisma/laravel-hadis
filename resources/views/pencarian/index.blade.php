@@ -49,16 +49,21 @@
                 </td>
             </tr>
         </table>
-        <br><br>
-        <div class="text-left">
-            <span><strong>KATEGORI : </strong></span>
-        </div>
-        <hr>
-        <div>
-            <input type="text" class="form-control" id="kategori" name="kategori" placeholder="Masukan kategori" aria-describedby="basic-addon2" required>
-        </div>
-        <br>
     </div>
+</form>
+<form action=" {{ url('hadits/pencarian/categories') }} " method="post">
+    @csrf
+    <br><br>
+    <div class="text-left">
+        <span><strong>KATEGORI : </strong></span>
+    </div>
+    <hr>
+    <div>
+        <input type="text" class="form-control" id="kategori" name="kategori" placeholder="Masukan kategori..." aria-describedby="basic-addon2" required>
+        <br>
+        <button class="btn btn-primary" type="submit">Cari</button>
+    </div>
+    <br>
 </form>
 
 <div class="modal fade" id="modal_alert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -39,6 +39,52 @@ class PencarianController extends Controller
         }
     }
 
+    public function postCategories() {
+        set_time_limit(1800);
+        ini_set('memory_limit','2048M');
+        $request = Request::all();
+
+        $perawis = [
+            'ahmad',
+            'annasai',
+            'bukhari',
+            'ibnumajah',
+            'malik',
+            'muslim',
+            'tirmidzi',
+
+        ];
+
+        $results = [];
+        foreach ($perawis as $perawi) {
+            $result = DB::table($perawi)
+                ->where('Kategori', 'ilike', '%'.$request['kategori'].'%')
+                ->orderBy('Kode', 'asc')->get();
+            
+            if(!property_exists($perawi, $result)){
+                $results[$perawi] = $result;
+            } else {
+                array_push($results[$perawi], $result);
+            }
+        }
+
+        $finalResults = [];
+        foreach ($perawis as $perawi) {
+            foreach ($results[$perawi] as $rr) {
+                $rr->perawi = $perawi;
+                $finalResults[] = $rr;
+            }
+        }
+
+        $data['mode'] = 'kategori';
+        $data['num_results'] = count($finalResults);
+        $data['keywords'] = '';
+        $data['results'] = $finalResults;
+
+        return view('pencarian.result')->with($data);
+        // return response()->json($datas);
+    }
+
     public function postResult() {
         set_time_limit(1800);
         ini_set('memory_limit','2048M');
@@ -46,13 +92,11 @@ class PencarianController extends Controller
         $request = Request::all();
         $keywords = $request['kata'];
         $perawis = $request['perawi'];
-        $kategori = $request['kategori'];
         $results = [];
 
         // mengambil data hadits dar database berdasarkan checkbox yang dipilih.
         foreach ($perawis as $perawi) {
             $result = DB::table($perawi)
-                ->where('Kategori', 'ilike', '%'.$kategori.'%')
                 ->orderBy('Kode', 'asc')->get();
 
             if(!property_exists($perawi, $result)){
@@ -101,16 +145,16 @@ class PencarianController extends Controller
         }
 
         $kmp->array_sort_by_column($finalResults);
-        // $data['results'] = count($finalResults) >= 5 ? array_slice($finalResults, 0, 5, true) : $finalResults;
         $data['results'] = $finalResults;
         $data['num_results'] = count($finalResults);
         $data['keywords'] = $keywords;
+        $data['mode'] = 'perawi';
         // return response()->json($finalResults);
         return view('pencarian.result')->with($data);
     }
 
-    public function getShow($perawi, $kode, $keywords) {
-        $keywords = explode(" ", $keywords);
+    public function getShow($perawi, $kode, $keywords='') {
+        $keywords = $keywords != '' ? explode(" ", $keywords) : $keywords;
         $result = DB::table($perawi)
                 ->where('NoHdt', $kode)
                 ->first();
