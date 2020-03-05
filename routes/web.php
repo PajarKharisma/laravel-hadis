@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/hadits', function () {
     return view('index');
 });
 
