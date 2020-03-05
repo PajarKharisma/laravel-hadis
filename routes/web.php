@@ -15,6 +15,10 @@ Route::get('/hadits', function () {
     return view('index');
 });
 
+Route::get('/', function () {
+    return view('index');
+});
+
 Route::prefix('hadits')->group(function(){
     Route::get('pencarian/', 'PencarianController@index');
     AdvancedRoute::controllers([
