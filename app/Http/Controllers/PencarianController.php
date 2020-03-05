@@ -49,7 +49,7 @@ class PencarianController extends Controller
         $kategori = $request['kategori'];
         $results = [];
 
-        // mengambil data hadits dar database berdasarkan checkbox yang dipilih
+        // mengambil data hadits dar database berdasarkan checkbox yang dipilih.
         foreach ($perawis as $perawi) {
             $result = DB::table($perawi)
                 ->where('Kategori', 'ilike', '%'.$kategori.'%')
