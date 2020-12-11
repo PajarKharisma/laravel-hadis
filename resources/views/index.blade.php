@@ -1,7 +1,7 @@
 @extends('app', ['titlePage' => 'BERANDA'])
 
 @section('content')
-    <img src="{{ url('img/home.png') }}" class="center" alt="">
+    <img src="{{ url('img/logo.png') }}" class="center" alt="">
     <br><br>
     <a class="center btn btn-primary" href="{{ url('hadits/pencarian') }}">MULAI</a>
     <!-- Copyright -->
