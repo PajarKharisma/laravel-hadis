@@ -26,6 +26,7 @@ class PencarianController extends Controller
                 $result[] = $category;
             }
         }
+        array_unshift($result, 'Jumlah saran : '.count($result));
 
         return $result;
     }
